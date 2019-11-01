@@ -24,6 +24,7 @@ int symbol_newtona(unsigned int N, unsigned int K)
 
 int main()
 {
+	int adam;
 	int d;
 	unsigned int N, K;
 	std::cin >> d;
