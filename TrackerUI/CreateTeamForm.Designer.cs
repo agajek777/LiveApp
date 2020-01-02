@@ -1,4 +1,4 @@
-﻿namespace TrackerUI
+﻿namespace LiveAppUI
 {
     partial class CreateTeamForm
     {

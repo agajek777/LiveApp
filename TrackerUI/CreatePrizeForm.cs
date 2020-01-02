@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TrackerLibrary;
-using TrackerLibrary.Models;
+using LiveLibrary;
+using LiveLibrary.Models;
 
-namespace TrackerUI
+namespace LiveAppUI
 {
     public partial class CreatePrizeForm : Form
     {
-        public CreatePrizeForm()
+        IPrizeRequester callingForm;
+        public CreatePrizeForm(IPrizeRequester caller)
         {
             InitializeComponent();
+            callingForm = caller;
         }
 
         private void firstNameValue_TextChanged(object sender, EventArgs e)
@@ -40,11 +42,13 @@ namespace TrackerUI
                     prizePercentageValue.Text);
 
                 GlobalConfig.Connection.CreatePrize(model);
+                callingForm.PrizeComplete(model);
 
-                placeNameValue.Clear();
-                placeNumberValue.Clear();
-                prizeAmountValue.Text = "0";
-                prizePercentageValue.Text = "0";
+                this.Close();
+                //placeNameValue.Clear();
+                //placeNumberValue.Clear();
+                //prizeAmountValue.Text = "0";
+                //prizePercentageValue.Text = "0";
             }
             else
             {

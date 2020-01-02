@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary
+namespace LiveLibrary
 {
     public enum DatabaseType
     { 
         Sql,
-        TextFile
+        TextFile,
     }
 }

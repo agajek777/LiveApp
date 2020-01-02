@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary.Models
+namespace LiveLibrary.Models
 {
     public class PrizeModel
     {

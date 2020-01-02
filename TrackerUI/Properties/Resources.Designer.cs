@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TrackerUI.Properties
+namespace LiveAppUI.Properties
 {
 
 

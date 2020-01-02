@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrackerLibrary.Models;
-using TrackerLibrary.DataAccess.TextHelpers;
+using LiveLibrary.Models;
+using LiveLibrary.DataAccess.TextHelpers;
 
-namespace TrackerLibrary.DataAccess
+namespace LiveLibrary.DataAccess
 {
     public class TextConnector : IDataConnection
     {
         private const string PrizesFile = "PrizeModels.csv";
         private const string PeopleFile = "PersonModels.csv";
+        private const string TeamFile = "TeamModels.csv";
+        private const string TournamentsFile = "TournamentModels.csv";
+        private const string MatchupFile = "MatchupModels.csv";
+        private const string MatchupEntryFile = "MatchupEntryModels.csv";
 
         public PrizeModel CreatePrize(PrizeModel model)
         {
@@ -26,7 +30,6 @@ namespace TrackerLibrary.DataAccess
             prizes.SaveToPrizeFile(PrizesFile);
             return model;
         }
-
         public PersonModel CreatePerson(PersonModel model)
         {
             List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
@@ -40,15 +43,39 @@ namespace TrackerLibrary.DataAccess
             people.SaveToPeopleFile(PeopleFile);
             return model;
         }
-
+        public void CreateTournament(TournamentModel model)
+        {
+            List<TournamentModel> tournaments = TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+            int currentId = 1;
+            if (tournaments.Count != 0)
+            {
+                currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+            model.Id = currentId;
+            model.SaveRoundsToFile(MatchupFile, MatchupEntryFile);
+            tournaments.Add(model);
+            tournaments.SaveToTournamentsFile(TournamentsFile);
+        }
         public List<PersonModel> GetPerson_All()
         {
             return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
         }
-
         public TeamModel CreateTeam(TeamModel model)
         {
-            throw new NotImplementedException();
+            List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
+            int currentId = 1;
+            if (teams.Count != 0)
+            {
+                currentId = teams.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+            model.Id = currentId;
+            teams.Add(model);
+            teams.SaveToTeamFile(TeamFile);
+            return model;
+        }
+        public List<TeamModel> GetTeam_All()
+        {
+            return TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
         }
     }
 }

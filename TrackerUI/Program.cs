@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TrackerLibrary;
+using LiveLibrary;
 
-namespace TrackerUI
+namespace LiveAppUI
 {
     static class Program
     {
@@ -19,13 +19,11 @@ namespace TrackerUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //init sql conn
-            TrackerLibrary.GlobalConfig.InitializeConnections(DatabaseType.TextFile);
+            LiveLibrary.GlobalConfig.InitializeConnections(DatabaseType.Sql);
             //Application.Run(new TournamentViewerForm());
             //Application.Run(new TournamentDashboardForm());
-            //Application.Run(new CreatePrizeForm());
-            //Application.Run(new CreateTournamentForm());
-            Application.Run(new CreateTeamForm());
+            Application.Run(new CreateTournamentForm());
+            //Application.Run(new CreateTeamForm());
         }
     }
 }

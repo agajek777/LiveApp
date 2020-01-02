@@ -7,20 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TrackerLibrary;
-using TrackerLibrary.Models;
+using LiveLibrary;
+using LiveLibrary.Models;
 
-namespace TrackerUI
+namespace LiveAppUI
 {
     public partial class CreateTeamForm : Form
     {
         private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
         private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
-        public CreateTeamForm()
+        ITeamRequester callingForm;
+        public CreateTeamForm(ITeamRequester caller)
         {
             InitializeComponent();
-            //CreateSampleData();
+            callingForm = caller;
             WireUpList();
+
         }
         private void WireUpList()
         {
@@ -139,6 +141,8 @@ namespace TrackerUI
             t.TeamMembers = selectedTeamMembers;
 
             t = GlobalConfig.Connection.CreateTeam(t);
+            callingForm.TeamComplete(t);
+            this.Close();
         }
 
         private void addMemberButton_Click(object sender, EventArgs e)

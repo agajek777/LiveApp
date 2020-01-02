@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TrackerUI
+namespace LiveAppUI
 {
     public partial class TournamentDashboardForm : Form
     {
